@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Đền Bà Vũ 360° — Tham quan thực tế ảo</title>
+<link rel="stylesheet" href="vendor/pannellum.css">
+<style>
+  :root{ --do:#7a1f1f; --vang:#c79a3a; }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:#1a1410;color:#fff}
+  #pano{position:absolute;inset:0}
+  header{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;gap:12px;
+    padding:10px 16px;background:linear-gradient(180deg,rgba(20,12,8,.85),rgba(20,12,8,0));pointer-events:none}
+  header .logo{width:40px;height:40px;border-radius:50%;background:var(--do);color:var(--vang);
+    display:grid;place-items:center;font-weight:700;font-size:13px;border:2px solid var(--vang)}
+  header h1{font-size:17px;margin:0;font-weight:600;text-shadow:0 1px 3px #000}
+  header h1 small{display:block;font-size:11px;font-weight:400;opacity:.85}
+  #diadiem{position:absolute;left:12px;top:64px;bottom:52px;z-index:5;width:212px;
+    display:flex;flex-direction:column;gap:4px;overflow-y:auto;padding-right:4px}
+  #diadiem::-webkit-scrollbar{width:6px} #diadiem::-webkit-scrollbar-thumb{background:rgba(199,154,58,.5);border-radius:3px}
+  #diadiem button{pointer-events:auto;border:0;cursor:pointer;text-align:left;
+    padding:6px 10px;border-radius:7px;font-size:12.5px;color:#fff;background:rgba(20,12,8,.55);
+    border:1px solid rgba(199,154,58,.35);backdrop-filter:blur(4px);transition:.12s;flex:0 0 auto}
+  #diadiem button:hover{background:rgba(122,31,31,.85)}
+  #diadiem button.active{background:var(--do);border-color:var(--vang);font-weight:600}
+  #diadiem .num{display:inline-block;width:20px;color:var(--vang);font-weight:700}
+  .hint{position:absolute;right:14px;bottom:14px;z-index:5;font-size:12px;opacity:.7;
+    background:rgba(0,0,0,.45);padding:6px 10px;border-radius:6px;max-width:46vw}
+  .pnlm-hotspot.info-do{background:var(--do);border:2px solid var(--vang)}
+</style>
+</head>
+<body>
+<div id="pano"></div>
+<header>
+  <div class="logo">BV</div>
+  <h1>Đền Bà Vũ <small>Di tích Quốc gia · Thờ Thánh Mẫu Vũ Nương — Bắc Lý, Lý Nhân, Hà Nam</small></h1>
+</header>
+<div id="diadiem"></div>
+<div class="hint">Kéo để nhìn quanh · cuộn để phóng to · bấm mũi tên để đi</div>
+
+<script src="vendor/pannellum.js"></script>
+<script>
+let DATA, viewer;
+const bar=document.getElementById("diadiem");
+const esc=s=>(s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+fetch("tour.json").then(r=>r.json()).then(d=>{ DATA=d; build(); });
+
+function hsConfig(h){
+  const o={ type:h.type, yaw:h.yaw, pitch:h.pitch };
+  if(h.type==="scene"){ o.sceneId=h.sceneId; o.text=DATA.names[h.sceneId]; }
+  else { o.text=h.text; o.cssClass="pnlm-hotspot info-do"; }
+  return o;
+}
+function build(){
+  // Tiêu đề lấy từ dữ liệu (mặc định Đền Bà Vũ)
+  const title=DATA.title||"Đền Bà Vũ";
+  const sub=DATA.subtitle||"Di tích Quốc gia · Thờ Thánh Mẫu Vũ Nương — Bắc Lý, Lý Nhân, Hà Nam";
+  document.title=title+" 360° — Tham quan thực tế ảo";
+  document.querySelector("header h1").innerHTML=esc(title)+"<small>"+esc(sub)+"</small>";
+  document.querySelector("header .logo").textContent=
+    title.replace(/^(Đền|Đình|Chùa|Miếu|Phủ)\s+/i,"").trim().split(/\s+/).slice(0,2).map(w=>w[0]||"").join("").toUpperCase()||"HV";
+  const scenes={};
+  for(const id of DATA.order){ const s=DATA.scenes[id];
+    scenes[id]={ title:DATA.names[id], panorama:s.panorama, hotSpots:s.hotSpots.map(hsConfig) }; }
+  viewer = pannellum.viewer("pano", {
+    default:{ firstScene:DATA.first||DATA.order[0], autoLoad:true, compass:true,
+              sceneFadeDuration:900, autoRotateInactivityDelay:6000 },
+    scenes: scenes
+  });
+  viewer.on("load", ()=>{ syncBar(); viewer.startAutoRotate(-2); });
+  viewer.on("mousedown",()=>viewer.stopAutoRotate());
+  viewer.on("scenechange", syncBar);
+
+  DATA.order.forEach((id,i)=>{ const b=document.createElement("button");
+    b.innerHTML='<span class="num">'+(i+1)+'</span>'+DATA.names[id];
+    b.dataset.id=id; b.onclick=()=>viewer.loadScene(id); bar.appendChild(b); });
+}
+function syncBar(){ if(!viewer)return; const cur=viewer.getScene();
+  bar.querySelectorAll("button").forEach(b=>{ const a=b.dataset.id===cur;
+    b.classList.toggle("active",a); if(a)b.scrollIntoView({block:"nearest"}); }); }
+</script>
+</body>
+</html>

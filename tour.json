@@ -1,0 +1,450 @@
+{
+  "first": "p1",
+  "order": [
+    "p1",
+    "p2",
+    "p3",
+    "p4",
+    "p5",
+    "p6",
+    "p7",
+    "p8",
+    "p9",
+    "p10",
+    "p11",
+    "p12",
+    "p13",
+    "p14",
+    "p15",
+    "p16",
+    "p17",
+    "p18"
+  ],
+  "names": {
+    "p1": "Cổng Đền Bà Vũ",
+    "p2": "Gốc đa cổ thụ",
+    "p3": "Bến Hoàng Giang",
+    "p4": "Gian Tiền Tế",
+    "p5": "Lầu Cậu",
+    "p6": "Lầu Cô",
+    "p7": "Tứ Phủ Công Đồng",
+    "p8": "Tam Toà Thánh Mẫu",
+    "p9": "Khánh cổ",
+    "p10": "Chuông",
+    "p11": "Ban thờ Thánh Mẫu Vũ Nương",
+    "p12": "Ban Thánh Cô (phải)",
+    "p13": "Ban Thánh Cô (trái)",
+    "p14": "Lối sang Ban Trần Triều",
+    "p15": "Ban Trần Triều Đại Vương & Bác Hồ",
+    "p16": "Gian Bằng di tích",
+    "p17": "Lối sang Ban Sơn Trang",
+    "p18": "Ban Sơn Trang"
+  },
+  "scenes": {
+    "p1": {
+      "panorama": "panos/01.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p4",
+          "yaw": 0,
+          "pitch": -3
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p2",
+          "yaw": 110,
+          "pitch": -3
+        },
+        {
+          "id": "l3",
+          "type": "scene",
+          "sceneId": "p3",
+          "yaw": 150,
+          "pitch": -5
+        },
+        {
+          "id": "i1",
+          "type": "info",
+          "text": "Đền Bà Vũ — Di tích lịch sử cấp Quốc gia (1993). Còn lưu giữ nhiều sắc phong qua các triều đại.",
+          "yaw": -90,
+          "pitch": 0
+        }
+      ]
+    },
+    "p2": {
+      "panorama": "panos/02.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p1",
+          "yaw": 165,
+          "pitch": -2
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p3",
+          "yaw": -46.8,
+          "pitch": -9.4
+        },
+        {
+          "id": "i1",
+          "type": "info",
+          "text": "Sông Hoàng Giang — gắn truyền thuyết \"Người con gái Nam Xương\", nơi Vũ Nương trẫm mình minh oan.",
+          "yaw": -90,
+          "pitch": 0
+        }
+      ]
+    },
+    "p3": {
+      "panorama": "panos/03.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p2",
+          "yaw": 180,
+          "pitch": -5
+        },
+        {
+          "id": "i1",
+          "type": "info",
+          "text": "Bến Hoàng Giang — đường thuỷ trước cửa đền.",
+          "yaw": -20.9,
+          "pitch": -34.9
+        }
+      ]
+    },
+    "p4": {
+      "panorama": "panos/04.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p7",
+          "yaw": 0,
+          "pitch": -3
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p1",
+          "yaw": 180,
+          "pitch": -3
+        },
+        {
+          "id": "l3",
+          "type": "scene",
+          "sceneId": "p6",
+          "yaw": 64.4,
+          "pitch": -8.4
+        },
+        {
+          "id": "l4",
+          "type": "scene",
+          "sceneId": "p5",
+          "yaw": -71.1,
+          "pitch": -10.7
+        },
+        {
+          "id": "l5",
+          "type": "scene",
+          "sceneId": "p16",
+          "yaw": -34.4,
+          "pitch": -4.6
+        },
+        {
+          "id": "l6",
+          "type": "scene",
+          "sceneId": "p17",
+          "yaw": 28.9,
+          "pitch": -5.6
+        }
+      ]
+    },
+    "p5": {
+      "panorama": "panos/05.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p7",
+          "yaw": 127.7,
+          "pitch": -15.2
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p1",
+          "yaw": -90.3,
+          "pitch": -7.1
+        },
+        {
+          "id": "l3",
+          "type": "scene",
+          "sceneId": "p4",
+          "yaw": -176.8,
+          "pitch": -18.9
+        }
+      ]
+    },
+    "p6": {
+      "panorama": "panos/06.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p1",
+          "yaw": 121,
+          "pitch": 2
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p7",
+          "yaw": -134.7,
+          "pitch": -12.4
+        },
+        {
+          "id": "l3",
+          "type": "scene",
+          "sceneId": "p4",
+          "yaw": 175.9,
+          "pitch": -18.1
+        }
+      ]
+    },
+    "p7": {
+      "panorama": "panos/07.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p16",
+          "yaw": -98.9,
+          "pitch": -5.1
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p8",
+          "yaw": -6.7,
+          "pitch": -18.7
+        },
+        {
+          "id": "l3",
+          "type": "scene",
+          "sceneId": "p17",
+          "yaw": 85.6,
+          "pitch": -17.5
+        }
+      ]
+    },
+    "p8": {
+      "panorama": "panos/08.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p9",
+          "yaw": 110.7,
+          "pitch": -10.4
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p10",
+          "yaw": -116.7,
+          "pitch": -9.8
+        }
+      ]
+    },
+    "p9": {
+      "panorama": "panos/09.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p8",
+          "yaw": -150.4,
+          "pitch": -29
+        }
+      ]
+    },
+    "p10": {
+      "panorama": "panos/10.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p13",
+          "yaw": 23.2,
+          "pitch": -16.8
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p7",
+          "yaw": -64.8,
+          "pitch": -35.7
+        },
+        {
+          "id": "l3",
+          "type": "scene",
+          "sceneId": "p8",
+          "yaw": 137,
+          "pitch": -19.7
+        }
+      ]
+    },
+    "p11": {
+      "panorama": "panos/11.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p12",
+          "yaw": -93.7,
+          "pitch": -3.5
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p13",
+          "yaw": 85.9,
+          "pitch": -10.2
+        },
+        {
+          "id": "i1",
+          "type": "info",
+          "text": "Cung cấm — Ban thờ Thánh Mẫu Vũ Nương (Vũ Thị Thiết), nhân vật \"Chuyện người con gái Nam Xương\".",
+          "yaw": -60.4,
+          "pitch": -78.6
+        }
+      ]
+    },
+    "p12": {
+      "panorama": "panos/12.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p11",
+          "yaw": -102.9,
+          "pitch": -21
+        }
+      ]
+    },
+    "p13": {
+      "panorama": "panos/13.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p10",
+          "yaw": -128.4,
+          "pitch": -19.2
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p11",
+          "yaw": 95.2,
+          "pitch": -21.2
+        }
+      ]
+    },
+    "p14": {
+      "panorama": "panos/14.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p15",
+          "yaw": -10.4,
+          "pitch": -15.1
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p16",
+          "yaw": 169.2,
+          "pitch": -18.1
+        }
+      ]
+    },
+    "p15": {
+      "panorama": "panos/15.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p14",
+          "yaw": -174.3,
+          "pitch": -21
+        }
+      ]
+    },
+    "p16": {
+      "panorama": "panos/16.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p14",
+          "yaw": 87.9,
+          "pitch": -28.1
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p4",
+          "yaw": -88.1,
+          "pitch": -19.9
+        },
+        {
+          "id": "l3",
+          "type": "scene",
+          "sceneId": "p7",
+          "yaw": 174.5,
+          "pitch": -16.9
+        }
+      ]
+    },
+    "p17": {
+      "panorama": "panos/17.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p18",
+          "yaw": 14.6,
+          "pitch": -14.2
+        },
+        {
+          "id": "l2",
+          "type": "scene",
+          "sceneId": "p4",
+          "yaw": -178.3,
+          "pitch": -12.8
+        }
+      ]
+    },
+    "p18": {
+      "panorama": "panos/18.jpg",
+      "hotSpots": [
+        {
+          "id": "l1",
+          "type": "scene",
+          "sceneId": "p17",
+          "yaw": 171.8,
+          "pitch": -22.7
+        }
+      ]
+    }
+  }
+}
