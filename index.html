@@ -28,6 +28,17 @@
   .hint{position:absolute;right:14px;bottom:14px;z-index:5;font-size:12px;opacity:.7;
     background:rgba(0,0,0,.45);padding:6px 10px;border-radius:6px;max-width:46vw}
   .pnlm-hotspot.info-do{background:var(--do);border:2px solid var(--vang)}
+  /* Tắt màn hình loading của Pannellum */
+  .pnlm-lbox,.pnlm-lmsg,.pnlm-lbar,.pnlm-load-box{display:none!important}
+  /* Responsive cho điện thoại */
+  @media(max-width:640px){
+    header{padding:8px 12px}
+    header h1{font-size:14px;line-height:1.25} header h1 small{font-size:10px}
+    header .logo{width:34px;height:34px;font-size:11px}
+    #diadiem{width:46vw;max-width:172px;top:54px;bottom:42px}
+    #diadiem button{font-size:11.5px;padding:5px 8px}
+    .hint{font-size:10.5px;max-width:62vw;bottom:10px;right:10px;padding:5px 8px}
+  }
 </style>
 </head>
 <body>
