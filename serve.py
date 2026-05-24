@@ -32,11 +32,20 @@ class H(http.server.SimpleHTTPRequestHandler):
             body = self.rfile.read(n)
             try:
                 data = json.loads(body.decode("utf-8"))
-                with open(os.path.join(HERE, "tour.json"), "w", encoding="utf-8") as f:
+                dst = os.path.join(HERE, "tour.json")
+                # Tự sao lưu bản cũ trước khi ghi đè (giữ 20 bản gần nhất)
+                if os.path.exists(dst):
+                    import time, shutil
+                    bdir = os.path.join(HERE, "backups"); os.makedirs(bdir, exist_ok=True)
+                    shutil.copy2(dst, os.path.join(bdir, "tour-" + time.strftime("%Y%m%d-%H%M%S") + ".json"))
+                    olds = sorted(f for f in os.listdir(bdir) if f.startswith("tour-"))
+                    for f in olds[:-20]:
+                        os.remove(os.path.join(bdir, f))
+                with open(dst, "w", encoding="utf-8") as f:
                     json.dump(data, f, ensure_ascii=False, indent=2)
                 self.send_response(200); self.end_headers()
                 self.wfile.write(b'{"ok":true}')
-                print("  ✔ da luu tour.json")
+                print("  ✔ da luu tour.json (+ sao luu)")
             except Exception as e:
                 self.send_response(500); self.end_headers()
                 self.wfile.write(str(e).encode())

@@ -54,9 +54,9 @@ function hsConfig(h){
   return o;
 }
 function build(){
-  // Tiêu đề lấy từ dữ liệu (mặc định Đền Bà Vũ)
-  const title=DATA.title||"Đền Bà Vũ";
-  const sub=DATA.subtitle||"Di tích Quốc gia · Thờ Thánh Mẫu Vũ Nương — Bắc Lý, Lý Nhân, Hà Nam";
+  // Tiêu đề lấy từ dữ liệu (tour.json: title/subtitle)
+  const title=DATA.title||"Tour 360°";
+  const sub=DATA.subtitle||"";
   document.title=title+" 360° — Tham quan thực tế ảo";
   document.querySelector("header h1").innerHTML=esc(title)+"<small>"+esc(sub)+"</small>";
   document.querySelector("header .logo").textContent=
