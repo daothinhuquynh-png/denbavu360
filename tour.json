@@ -310,15 +310,15 @@
           "id": "l1",
           "type": "scene",
           "sceneId": "p12",
-          "yaw": -93.7,
-          "pitch": -3.5
+          "yaw": 85.9,
+          "pitch": -10.2
         },
         {
           "id": "l2",
           "type": "scene",
           "sceneId": "p13",
-          "yaw": 85.9,
-          "pitch": -10.2
+          "yaw": -93.7,
+          "pitch": -3.5
         },
         {
           "id": "i1",
