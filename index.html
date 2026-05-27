@@ -2,95 +2,227 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Đền Bà Vũ 360° — Tham quan thực tế ảo</title>
 <link rel="stylesheet" href="vendor/pannellum.css">
 <style>
-  :root{ --do:#7a1f1f; --vang:#c79a3a; }
-  *{box-sizing:border-box}
-  html,body{margin:0;height:100%;font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:#1a1410;color:#fff}
+  :root{ --do:#7a1f1f; --vang:#c79a3a; --glass:rgba(18,12,8,.62); }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%;font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:#15100c;color:#fff;overflow:hidden}
   #pano{position:absolute;inset:0}
-  header{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;gap:12px;
-    padding:10px 16px;background:linear-gradient(180deg,rgba(20,12,8,.85),rgba(20,12,8,0));pointer-events:none}
-  header .logo{width:40px;height:40px;border-radius:50%;background:var(--do);color:var(--vang);
-    display:grid;place-items:center;font-weight:700;font-size:13px;border:2px solid var(--vang)}
-  header h1{font-size:17px;margin:0;font-weight:600;text-shadow:0 1px 3px #000}
-  header h1 small{display:block;font-size:11px;font-weight:400;opacity:.85}
-  #diadiem{position:absolute;left:12px;top:64px;bottom:52px;z-index:5;width:212px;
-    display:flex;flex-direction:column;gap:4px;overflow-y:auto;padding-right:4px}
-  #diadiem::-webkit-scrollbar{width:6px} #diadiem::-webkit-scrollbar-thumb{background:rgba(199,154,58,.5);border-radius:3px}
-  #diadiem button{pointer-events:auto;border:0;cursor:pointer;text-align:left;
-    padding:6px 10px;border-radius:7px;font-size:12.5px;color:#fff;background:rgba(20,12,8,.55);
-    border:1px solid rgba(199,154,58,.35);backdrop-filter:blur(4px);transition:.12s;flex:0 0 auto}
-  #diadiem button:hover{background:rgba(122,31,31,.85)}
-  #diadiem button.active{background:var(--do);border-color:var(--vang);font-weight:600}
-  #diadiem .num{display:inline-block;width:20px;color:var(--vang);font-weight:700}
-  .hint{position:absolute;right:14px;bottom:14px;z-index:5;font-size:12px;opacity:.7;
-    background:rgba(0,0,0,.45);padding:6px 10px;border-radius:6px;max-width:46vw}
-  .pnlm-hotspot.info-do{background:var(--do);border:2px solid var(--vang)}
-  /* Tắt màn hình loading của Pannellum */
   .pnlm-lbox,.pnlm-lmsg,.pnlm-lbar,.pnlm-load-box{display:none!important}
-  /* Responsive cho điện thoại */
-  @media(max-width:640px){
-    header{padding:8px 12px}
-    header h1{font-size:14px;line-height:1.25} header h1 small{font-size:10px}
-    header .logo{width:34px;height:34px;font-size:11px}
-    #diadiem{width:46vw;max-width:172px;top:54px;bottom:42px}
-    #diadiem button{font-size:11.5px;padding:5px 8px}
-    .hint{font-size:10.5px;max-width:62vw;bottom:10px;right:10px;padding:5px 8px}
+  .pnlm-hotspot.info-do{background:var(--do);border:2px solid var(--vang)}
+  body.nohs .pnlm-hotspot{display:none!important}
+
+  /* ---- Tiêu đề ---- */
+  header{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;gap:11px;
+    padding:max(10px,env(safe-area-inset-top)) 16px 10px;pointer-events:none;
+    background:linear-gradient(180deg,rgba(15,10,7,.85),rgba(15,10,7,0))}
+  header .logo{width:38px;height:38px;border-radius:50%;background:var(--do);color:var(--vang);
+    display:grid;place-items:center;font-weight:700;font-size:12px;border:2px solid var(--vang);flex:0 0 auto}
+  header h1{font-size:16px;margin:0;font-weight:600;text-shadow:0 1px 4px #000;line-height:1.2}
+  header h1 .cur{color:var(--vang)}
+  header h1 small{display:block;font-size:10.5px;font-weight:400;opacity:.8}
+
+  /* ---- Thanh điều khiển dưới ---- */
+  #bar{position:fixed;left:0;right:0;bottom:0;z-index:6;display:flex;justify-content:center;gap:7px;
+    padding:10px 10px calc(10px + env(safe-area-inset-bottom));overflow-x:auto;scrollbar-width:none;
+    background:linear-gradient(0deg,rgba(15,10,7,.92),rgba(15,10,7,0))}
+  #bar::-webkit-scrollbar{display:none}
+  .ctrl{pointer-events:auto;cursor:pointer;border:1px solid rgba(199,154,58,.5);background:var(--glass);
+    color:#fff;border-radius:12px;padding:9px 12px;font-size:13px;display:flex;align-items:center;gap:7px;
+    backdrop-filter:blur(8px);transition:.15s;white-space:nowrap;flex:0 0 auto}
+  .ctrl:hover{background:rgba(122,31,31,.85)} .ctrl.on{background:var(--do);border-color:var(--vang)}
+  .ctrl .ico{font-size:16px;line-height:1}
+
+  /* ---- Bảng địa điểm (thu/sổ) ---- */
+  #places{position:fixed;left:0;right:0;bottom:0;z-index:8;background:rgba(15,10,7,.97);
+    border-top-left-radius:18px;border-top-right-radius:18px;border-top:1px solid rgba(199,154,58,.4);
+    padding:8px 12px calc(14px + env(safe-area-inset-bottom));transform:translateY(106%);
+    transition:transform .32s cubic-bezier(.4,0,.2,1);max-height:70vh;display:flex;flex-direction:column}
+  #places.open{transform:translateY(0)}
+  #places .ph{display:flex;align-items:center;justify-content:space-between;padding:6px 4px 8px}
+  #places .ph b{color:var(--vang);font-size:14px}
+  #places .close{cursor:pointer;border:0;background:transparent;color:#ddd;font-size:24px;line-height:1;padding:0 6px}
+  #tabs{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 10px;scrollbar-width:none}
+  #tabs::-webkit-scrollbar{display:none}
+  .tab{cursor:pointer;white-space:nowrap;border:1px solid rgba(199,154,58,.45);background:transparent;color:#eee;
+    border-radius:20px;padding:6px 14px;font-size:12.5px;flex:0 0 auto}
+  .tab.on{background:#fff;color:#241a10;font-weight:700;border-color:#fff}
+  #grid{overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px;padding:2px 2px 4px}
+  .thumb{cursor:pointer;border-radius:10px;overflow:hidden;border:2px solid transparent;background:#241a12;position:relative}
+  .thumb img{width:100%;height:96px;object-fit:cover;display:block;opacity:.92}
+  .thumb .cap{position:absolute;left:0;right:0;bottom:0;padding:14px 8px 6px;font-size:12px;font-weight:600;
+    background:linear-gradient(0deg,rgba(0,0,0,.82),transparent);display:flex;align-items:center;gap:6px}
+  .thumb .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--vang);color:#241a10;font-weight:700;font-size:11px;flex:0 0 auto}
+  .thumb.active{border-color:var(--vang)} .thumb:hover img{opacity:1}
+  #backdrop{position:fixed;inset:0;z-index:7;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.3s}
+  #backdrop.show{opacity:1;pointer-events:auto}
+
+  /* ---- Màn hình mở đầu ---- */
+  #cover{position:fixed;inset:0;z-index:20;display:grid;place-items:center;text-align:center;padding:24px;
+    background:radial-gradient(120% 120% at 50% 30%,rgba(40,18,12,.6),rgba(10,7,5,.92)),#0b0705}
+  #cover.hide{opacity:0;pointer-events:none;transition:opacity .7s}
+  #cover .logo{width:74px;height:74px;border-radius:50%;background:var(--do);color:var(--vang);
+    display:grid;place-items:center;font-weight:700;font-size:22px;border:3px solid var(--vang);margin:0 auto 18px}
+  #cover h1{font-size:25px;margin:0 0 8px;letter-spacing:.5px}
+  #cover p{opacity:.85;max-width:520px;margin:0 auto 26px;line-height:1.55;font-size:14px}
+  #start{cursor:pointer;border:0;background:var(--vang);color:#241a10;font-weight:700;font-size:15px;
+    padding:13px 30px;border-radius:30px;box-shadow:0 6px 24px rgba(199,154,58,.35)}
+  #start:hover{filter:brightness(1.07)}
+
+  @media(max-width:600px){
+    header h1{font-size:14px} header h1 small{font-size:9.5px} header .logo{width:34px;height:34px}
+    .ctrl{padding:9px 10px;font-size:0;gap:0} .ctrl .ico{font-size:19px}   /* mobile: chỉ icon */
+    #grid{grid-template-columns:1fr 1fr}
+    #cover h1{font-size:21px}
   }
 </style>
 </head>
 <body>
 <div id="pano"></div>
+
 <header>
-  <div class="logo">BV</div>
-  <h1>Đền Bà Vũ <small>Di tích Quốc gia · Thờ Thánh Mẫu Vũ Nương — Bắc Lý, Lý Nhân, Hà Nam</small></h1>
+  <div class="logo" id="hlogo">BV</div>
+  <h1 id="htitle">Đền Bà Vũ<small></small></h1>
 </header>
-<div id="diadiem"></div>
-<div class="hint">Kéo để nhìn quanh · cuộn để phóng to · bấm mũi tên để đi</div>
+
+<div id="backdrop"></div>
+
+<div id="bar">
+  <button class="ctrl" id="btnPlaces"><span class="ico">▦</span><span>Địa điểm</span></button>
+  <button class="ctrl" id="btnPrev"><span class="ico">‹</span><span>Trước</span></button>
+  <button class="ctrl" id="btnNext"><span class="ico">›</span><span>Sau</span></button>
+  <button class="ctrl" id="btnHome"><span class="ico">⌂</span><span>Điểm đầu</span></button>
+  <button class="ctrl" id="btnMusic"><span class="ico">🎵</span><span>Nhạc</span></button>
+  <button class="ctrl on" id="btnRotate"><span class="ico">⟳</span><span>Tự xoay</span></button>
+  <button class="ctrl" id="btnEye"><span class="ico">◎</span><span>Mũi tên</span></button>
+  <button class="ctrl" id="btnGyro" style="display:none"><span class="ico">🧭</span><span>Xoay theo máy</span></button>
+  <button class="ctrl" id="btnFull"><span class="ico">⛶</span><span>Toàn màn hình</span></button>
+</div>
+
+<div id="places">
+  <div class="ph"><b>📍 Chọn địa điểm</b><button class="close" id="placesClose">×</button></div>
+  <div id="tabs"></div>
+  <div id="grid"></div>
+</div>
+
+<div id="cover">
+  <div>
+    <div class="logo" id="clogo">BV</div>
+    <h1 id="ctitle">Đền Bà Vũ</h1>
+    <p id="csub">Di tích Quốc gia · Thờ Thánh Mẫu Vũ Nương</p>
+    <button id="start">▶ Bắt đầu tham quan</button>
+  </div>
+</div>
+
+<audio id="bgm" loop preload="auto"></audio>
 
 <script src="vendor/pannellum.js"></script>
 <script>
-let DATA, viewer;
-const bar=document.getElementById("diadiem");
-const esc=s=>(s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const $=s=>document.querySelector(s), esc=s=>(s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+let DATA, viewer, rotating=true, groups=[], activeTab=0;
+const AUDIO_SRC="audio/nhacnen.mp3";
+const thumbOf=id=>DATA.scenes[id].panorama.replace("panos/","thumbs/");
 
-fetch("tour.json").then(r=>r.json()).then(d=>{ DATA=d; build(); });
+fetch("tour.json").then(r=>r.json()).then(d=>{ DATA=d; init(); });
 
-function hsConfig(h){
-  const o={ type:h.type, yaw:h.yaw, pitch:h.pitch };
-  if(h.type==="scene"){ o.sceneId=h.sceneId; o.text=DATA.names[h.sceneId]; }
-  else { o.text=h.text; o.cssClass="pnlm-hotspot info-do"; }
-  return o;
-}
-function build(){
-  // Tiêu đề lấy từ dữ liệu (tour.json: title/subtitle)
-  const title=DATA.title||"Tour 360°";
-  const sub=DATA.subtitle||"";
-  document.title=title+" 360° — Tham quan thực tế ảo";
-  document.querySelector("header h1").innerHTML=esc(title)+"<small>"+esc(sub)+"</small>";
-  document.querySelector("header .logo").textContent=
-    title.replace(/^(Đền|Đình|Chùa|Miếu|Phủ)\s+/i,"").trim().split(/\s+/).slice(0,2).map(w=>w[0]||"").join("").toUpperCase()||"HV";
+function hsCfg(h){ const o={type:h.type,yaw:h.yaw,pitch:h.pitch};
+  if(h.type==="scene"){o.sceneId=h.sceneId;o.text=DATA.names[h.sceneId];}
+  else{o.text=h.text;o.cssClass="pnlm-hotspot info-do";} return o; }
+
+function init(){
+  const title=DATA.title||"Tour 360°", sub=DATA.subtitle||"";
+  document.title=title+" 360°";
+  const initials=title.replace(/^(Đền|Đình|Chùa|Miếu|Phủ)\s+/i,"").trim().split(/\s+/).slice(0,2).map(w=>w[0]||"").join("").toUpperCase()||"360";
+  $("#hlogo").textContent=initials; $("#clogo").textContent=initials;
+  $("#ctitle").textContent=title; $("#csub").textContent=sub;
+  window._title=title; window._sub=sub;
+
+  groups = (DATA.groups && DATA.groups.length) ? DATA.groups : [{name:"Tất cả",scenes:DATA.order.slice()}];
+
   const scenes={};
   for(const id of DATA.order){ const s=DATA.scenes[id];
-    scenes[id]={ title:DATA.names[id], panorama:s.panorama, hotSpots:s.hotSpots.map(hsConfig) }; }
-  viewer = pannellum.viewer("pano", {
-    default:{ firstScene:DATA.first||DATA.order[0], autoLoad:true, compass:true,
-              sceneFadeDuration:900, autoRotateInactivityDelay:6000 },
-    scenes: scenes
+    scenes[id]={title:DATA.names[id],panorama:s.panorama,hotSpots:s.hotSpots.map(hsCfg)}; }
+  viewer=pannellum.viewer("pano",{
+    default:{firstScene:DATA.first||DATA.order[0],autoLoad:true,compass:true,
+             showControls:false,sceneFadeDuration:900,autoRotateInactivityDelay:3000},
+    scenes:scenes
   });
-  viewer.on("load", ()=>{ syncBar(); viewer.startAutoRotate(-2); });
-  viewer.on("mousedown",()=>viewer.stopAutoRotate());
-  viewer.on("scenechange", syncBar);
+  viewer.on("load",onScene);
+  viewer.on("scenechange",onScene);
 
-  DATA.order.forEach((id,i)=>{ const b=document.createElement("button");
-    b.innerHTML='<span class="num">'+(i+1)+'</span>'+DATA.names[id];
-    b.dataset.id=id; b.onclick=()=>viewer.loadScene(id); bar.appendChild(b); });
+  buildTabs(); renderGrid(); setupAudio(); setupGyro();
 }
-function syncBar(){ if(!viewer)return; const cur=viewer.getScene();
-  bar.querySelectorAll("button").forEach(b=>{ const a=b.dataset.id===cur;
-    b.classList.toggle("active",a); if(a)b.scrollIntoView({block:"nearest"}); }); }
+
+function onScene(){ const cur=viewer.getScene();
+  $("#htitle").innerHTML=esc(window._title)+' <span class="cur">· '+esc(DATA.names[cur])+'</span>'+
+    "<small>"+esc(window._sub)+"</small>";
+  // chuyển tab theo nhóm chứa điểm hiện tại
+  const gi=groups.findIndex(g=>g.scenes.includes(cur)); if(gi>=0 && gi!==activeTab){ activeTab=gi; buildTabs(); renderGrid(); }
+  document.querySelectorAll(".thumb").forEach(t=>t.classList.toggle("active",t.dataset.id===cur));
+  document.querySelectorAll(".tab").forEach((t,i)=>t.classList.toggle("on",i===activeTab));
+}
+
+/* ---- Địa điểm: tab nhóm + thumbnail ---- */
+function buildTabs(){ const t=$("#tabs"); t.innerHTML="";
+  groups.forEach((g,i)=>{ const b=document.createElement("button"); b.className="tab"+(i===activeTab?" on":"");
+    b.textContent=g.name; b.onclick=()=>{ activeTab=i; buildTabs(); renderGrid(); }; t.appendChild(b); });
+  if(groups.length<2) t.style.display="none";
+}
+function renderGrid(){ const g=$("#grid"); g.innerHTML=""; const cur=viewer&&viewer.getScene();
+  groups[activeTab].scenes.forEach(id=>{ if(!DATA.scenes[id])return;
+    const i=DATA.order.indexOf(id);
+    const c=document.createElement("div"); c.className="thumb"+(id===cur?" active":""); c.dataset.id=id;
+    c.innerHTML='<img loading="lazy" src="'+thumbOf(id)+'"><div class="cap"><span class="n">'+(i+1)+'</span>'+esc(DATA.names[id])+'</div>';
+    c.onclick=()=>{ viewer.loadScene(id); closePlaces(); }; g.appendChild(c); });
+}
+function openPlaces(){ $("#places").classList.add("open"); $("#backdrop").classList.add("show"); }
+function closePlaces(){ $("#places").classList.remove("open"); $("#backdrop").classList.remove("show"); }
+$("#btnPlaces").onclick=()=> $("#places").classList.contains("open")?closePlaces():openPlaces();
+$("#placesClose").onclick=closePlaces; $("#backdrop").onclick=closePlaces;
+
+/* ---- Trước / Sau / Điểm đầu ---- */
+function go(step){ const o=DATA.order, i=o.indexOf(viewer.getScene());
+  viewer.loadScene(o[(i+step+o.length)%o.length]); }
+$("#btnPrev").onclick=()=>go(-1); $("#btnNext").onclick=()=>go(1);
+$("#btnHome").onclick=()=>viewer.loadScene(DATA.first||DATA.order[0]);
+
+/* ---- Tự xoay / Ẩn mũi tên / Toàn màn hình ---- */
+$("#btnRotate").onclick=function(){ rotating=!rotating; this.classList.toggle("on",rotating);
+  rotating?viewer.startAutoRotate(-2):viewer.stopAutoRotate(); };
+$("#btnEye").onclick=function(){ const off=document.body.classList.toggle("nohs");
+  this.classList.toggle("on",off); };
+$("#btnFull").onclick=function(){ const el=document.documentElement;
+  if(!document.fullscreenElement){ (el.requestFullscreen||el.webkitRequestFullscreen||(()=>{})).call(el); this.classList.add("on"); }
+  else{ (document.exitFullscreen||document.webkitExitFullscreen||(()=>{})).call(document); this.classList.remove("on"); } };
+
+/* ---- Gyro (chỉ máy cảm ứng) ---- */
+let gyroOn=false;
+function setupGyro(){ if(!("ontouchstart" in window) || typeof DeviceOrientationEvent==="undefined") return;
+  $("#btnGyro").style.display=""; }
+$("#btnGyro").onclick=async function(){
+  try{
+    if(gyroOn){ viewer.stopOrientation(); gyroOn=false; this.classList.remove("on"); return; }
+    if(DeviceOrientationEvent.requestPermission){ const p=await DeviceOrientationEvent.requestPermission(); if(p!=="granted")return; }
+    viewer.startOrientation(); gyroOn=true; this.classList.add("on");
+  }catch(e){}
+};
+
+/* ---- Nhạc nền ---- */
+let musicOn=false, hasAudio=false; const bgm=$("#bgm");
+function setupAudio(){ fetch(AUDIO_SRC,{method:"HEAD"}).then(r=>{ hasAudio=r.ok;
+    if(!hasAudio) $("#btnMusic").style.display="none"; else { bgm.src=AUDIO_SRC; bgm.volume=0.45; }
+  }).catch(()=>$("#btnMusic").style.display="none"); }
+function playMusic(){ if(!hasAudio)return; bgm.play().then(()=>{musicOn=true;$("#btnMusic").classList.add("on");}).catch(()=>{}); }
+$("#btnMusic").onclick=function(){ if(!hasAudio)return;
+  if(musicOn){ bgm.pause(); musicOn=false; this.classList.remove("on"); } else playMusic(); };
+
+/* ---- Màn hình mở đầu ---- */
+$("#start").onclick=function(){ $("#cover").classList.add("hide");
+  if(rotating&&viewer) viewer.startAutoRotate(-2); playMusic();
+  setTimeout(()=>{ const c=$("#cover"); if(c) c.remove(); },800); };
 </script>
 </body>
 </html>

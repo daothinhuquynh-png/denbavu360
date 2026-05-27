@@ -448,5 +448,45 @@
         }
       ]
     }
-  }
+  },
+  "groups": [
+    {
+      "name": "Ngoại cảnh",
+      "scenes": [
+        "p1",
+        "p2",
+        "p3"
+      ]
+    },
+    {
+      "name": "Sân & Tiền tế",
+      "scenes": [
+        "p4",
+        "p5",
+        "p6"
+      ]
+    },
+    {
+      "name": "Nội điện chính",
+      "scenes": [
+        "p7",
+        "p8",
+        "p9",
+        "p10",
+        "p11",
+        "p12",
+        "p13"
+      ]
+    },
+    {
+      "name": "Trần Triều & Sơn Trang",
+      "scenes": [
+        "p14",
+        "p15",
+        "p16",
+        "p17",
+        "p18"
+      ]
+    }
+  ]
 }
